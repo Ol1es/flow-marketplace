@@ -31,7 +31,7 @@ exports.handler = async (event) => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      from: 'Okify <onboarding@resend.dev>',
+      from: 'Okify <hello@okify.co>',
       to: email,
       subject: "You're on the Okify waitlist 🎬",
       html: `
