@@ -718,10 +718,35 @@
     <span class="section-label">Early access</span>
     <h2 class="section-title">Be first on Flow</h2>
     <p class="section-sub">We're launching soon. Join the waitlist and get early access before anyone else.</p>
-    <div class="waitlist-form">
-      <input type="email" class="waitlist-input" placeholder="your@email.com">
-      <button class="btn-primary">Join waitlist</button>
-    </div>
+<div class="waitlist-form">
+  <input type="email" class="waitlist-input" id="waitlist-email" placeholder="your@email.com">
+  <button class="btn-primary" onclick="submitWaitlist()">Join waitlist</button>
+</div>
+<p id="waitlist-message" style="font-size: 0.78rem; color: var(--accent); margin-top: 1rem; display: none;">You're on the list. We'll be in touch.</p>
+
+<script>
+async function submitWaitlist() {
+  const email = document.getElementById('waitlist-email').value;
+  const msg = document.getElementById('waitlist-message');
+  if (!email) return;
+  
+  const res = await fetch('/.netlify/functions/waitlist', {
+    method: 'POST',
+    body: JSON.stringify({ email, type: 'client' })
+  });
+  
+  if (res.ok) {
+    document.getElementById('waitlist-email').value = '';
+    msg.style.display = 'block';
+    msg.style.color = 'var(--accent)';
+    msg.textContent = "You're on the list. We'll be in touch ✦";
+  } else {
+    msg.style.display = 'block';
+    msg.style.color = '#ff6b6b';
+    msg.textContent = 'Something went wrong. Try again.';
+  }
+}
+</script>
     <p style="font-size: 0.78rem; color: var(--gray-500); margin-top: 1rem;">No spam. Just a heads up when we go live.</p>
   </div>
 </div>
